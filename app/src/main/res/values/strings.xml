@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MC_BITF17A040_A1</string>
+    <string name="welcome">Welcome to</string>
+    <string name="mall_name">The Mall of Lahore</string>
+    <string name="main_info">
+        We offer you many things to shop online. If you want to proceed for
+        an order please click next.
+    </string>
+</resources>
