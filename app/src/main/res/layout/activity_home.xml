@@ -62,7 +62,7 @@
 
                     <LinearLayout
                         style="@style/button_img"
-                        android:layout_marginRight="0">
+                        android:layout_marginRight="0dp">
 
                         <ImageView
                             android:layout_width="100dp"
@@ -104,7 +104,7 @@
                     </LinearLayout>
                     <LinearLayout
                         style="@style/button_img"
-                        android:layout_marginRight="0">
+                        android:layout_marginRight="0dp">
 
                         <ImageView
                             android:layout_width="100dp"
