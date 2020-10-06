@@ -14,11 +14,21 @@
         <item name="android:textSize">23dp</item>
     </style>
 
+    <style name="heading_3">
+        <item name="android:textSize">20dp</item>
+    </style>
+
     <style name="heading_h1_bold">
         <item name="android:textSize">35dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="heading_4_bold">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
     <style name="heading_sub">
         <item name="android:textSize">12dp</item>
     </style>
