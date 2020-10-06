@@ -122,6 +122,12 @@
 
                 </TableRow>
             </TableLayout>
+
+            <Button
+                style="@style/button_next"
+                android:layout_marginTop="25dp"
+                android:text="@string/button_next"/>
+
         </LinearLayout>
 
     </ScrollView>

@@ -6,4 +6,6 @@
         We offer you many things to shop online. If you want to proceed for
         an order please click next.
     </string>
+    <string name="button_next">Next</string>
+    <string name="button_prev">Previous</string>
 </resources>
