@@ -37,12 +37,21 @@
         <item name="android:textSize">20dp</item>
     </style>
 
-
-
     <style name="button_next">
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:drawableRight">@drawable/ic_arrow_right</item>
         <item name="android:textColor">@android:color/background_light</item>
+    </style>
+
+    <style name="button_img">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingVertical">40dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:background">@drawable/border</item>
     </style>
 
 </resources>

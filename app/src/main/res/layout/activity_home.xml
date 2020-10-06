@@ -46,14 +46,9 @@
                     android:gravity="center">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingVertical="40dp">
+                        style="@style/button_img">
 
-                        <ImageView
+                    <ImageView
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@drawable/ic_paper" />
@@ -64,18 +59,16 @@
                             android:layout_marginTop="15dp"
                             android:text="Papers" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingVertical="40dp">
+                        style="@style/button_img"
+                        android:layout_marginRight="0">
 
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@drawable/ic_statitionaries" />
+                            android:background="@drawable/ic_statitionaries"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -92,15 +85,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginTop="20dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingVertical="40dp">
+                        style="@style/button_img">
 
                         <ImageView
                             android:layout_width="100dp"
@@ -114,12 +103,8 @@
                             android:text="Hard Drive" />
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:paddingVertical="40dp">
+                        style="@style/button_img"
+                        android:layout_marginRight="0">
 
                         <ImageView
                             android:layout_width="100dp"
