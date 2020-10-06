@@ -51,37 +51,39 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingVertical="50dp">
+                        android:paddingVertical="40dp">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:background="@drawable/ic_paper" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
                             android:text="Papers" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingVertical="50dp">
+                        android:paddingVertical="40dp">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/ic_paper" />
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/ic_statitionaries" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Papers" />
+                            android:layout_marginTop="15dp"
+                            android:text="Other Stattionaries" />
                     </LinearLayout>
+
 
 
                 </TableRow>
@@ -98,37 +100,39 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingVertical="50dp">
+                        android:paddingVertical="40dp">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/ic_paper" />
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/ic_disk" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Papers" />
+                            android:layout_marginTop="15dp"
+                            android:text="Hard Drive" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingVertical="50dp">
+                        android:paddingVertical="40dp">
 
                         <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/ic_paper" />
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/ic_waste" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Papers" />
+                            android:layout_marginTop="15dp"
+                            android:text="Other Waste Material" />
                     </LinearLayout>
+
 
 
                 </TableRow>
