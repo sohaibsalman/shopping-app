@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/heading_h2"
+                android:text="@string/main_heading" />
+
+            <TextView
+                style="@style/heading_sub"
+                android:layout_marginTop="10dp"
+                android:text="@string/sub_info" />
+
+            <TextView
+                style="@style/heading_sub"
+                android:text="to complete your order!" />
+
+            <TextView
+                style="@style/heading_4_bold"
+                android:text="Personal Details" />
+
+            <TextView
+                style="@style/required"
+                android:text="* Required" />
+
+            <TextView
+                style="@style/label"
+                android:text="First Name *:" />
+
+            <EditText
+                style="@style/textbox"
+                android:id="@+id/txtFirstName"
+                android:inputType="textPersonName"
+                android:background="@drawable/texbox_border" />
+            <TextView
+                style="@style/label"
+                android:text="Last Name *:" />
+
+            <EditText
+                style="@style/textbox"
+                android:id="@+id/txtLastName"
+                android:inputType="textPersonName"
+                android:background="@drawable/texbox_border" />
+            <TextView
+                style="@style/label"
+                android:text="Email ID *:" />
+
+            <EditText
+                style="@style/textbox"
+                android:id="@+id/txtEmail"
+                android:inputType="textPersonName"
+                android:background="@drawable/texbox_border" />
+            <TextView
+                style="@style/label"
+                android:text="Contact No. *:" />
+
+            <EditText
+                style="@style/textbox"
+                android:id="@+id/txtContact"
+                android:inputType="textPersonName"
+                android:background="@drawable/texbox_border" />
+
+            <Button
+                style="@style/button_next"
+                android:layout_marginTop="20dp"
+                android:text="@string/button_next"/>
+
+            <Button
+                style="@style/button_prev"
+                android:layout_marginTop="15dp"
+                android:text="@string/button_prev"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

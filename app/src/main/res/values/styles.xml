@@ -38,9 +38,17 @@
     </style>
 
     <style name="button_next">
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">#007bff</item>
         <item name="android:drawableRight">@drawable/ic_arrow_right</item>
         <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:paddingHorizontal">15dp</item>
+    </style>
+
+    <style name="button_prev">
+        <item name="android:background">#5a6268</item>
+        <item name="android:drawableLeft">@drawable/ic_arrow_right</item>
+        <item name="android:textColor">@android:color/background_light</item>
+        <item name="android:paddingHorizontal">15dp</item>
     </style>
 
     <style name="button_img">
@@ -52,6 +60,25 @@
         <item name="android:paddingVertical">40dp</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:background">@drawable/border</item>
+    </style>
+
+    <style name="required">
+        <item name="android:textSize">14dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+    </style>
+
+    <style name="label">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginVertical">10dp</item>
+    </style>
+
+    <style name="textbox">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">5dp</item>
     </style>
 
 </resources>
