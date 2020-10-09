@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-
     <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,8 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="50dp"
-            >
+            style="@style/layout_padding">
 
             <TextView
                 style="@style/heading_h2"
@@ -137,11 +130,10 @@
 
             <Button
                 style="@style/button_next"
-                android:id="@+id/btnNext"
+                android:id="@+id/home_btn_next"
                 android:layout_marginTop="25dp"
                 android:text="@string/button_next"/>
 
         </LinearLayout>
 
     </ScrollView>
-</LinearLayout>

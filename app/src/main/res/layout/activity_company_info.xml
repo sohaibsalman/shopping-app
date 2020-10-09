@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
 
     <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            style="@style/layout_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="50dp"
             android:orientation="vertical">
 
             <TextView
@@ -79,8 +76,8 @@
 
             <Spinner
                 style="@style/textbox"
-                android:background="@drawable/texbox_border" />
-            />
+                android:id="@+id/spinBoxes"
+                android:background="@drawable/texbox_border" />/>
 
             <Button
                 style="@style/button_next"
@@ -96,4 +93,3 @@
 
     </ScrollView>
 
-</LinearLayout>

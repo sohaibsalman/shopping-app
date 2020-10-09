@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
     <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            style="@style/layout_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="50dp"
             android:orientation="vertical">
 
             <TextView
@@ -61,7 +57,7 @@
             <EditText
                 style="@style/textbox"
                 android:id="@+id/txtEmail"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:background="@drawable/texbox_border" />
             <TextView
                 style="@style/label"
@@ -70,15 +66,17 @@
             <EditText
                 style="@style/textbox"
                 android:id="@+id/txtContact"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:background="@drawable/texbox_border" />
 
             <Button
+                android:id="@+id/btnPersonalNext"
                 style="@style/button_next"
                 android:layout_marginTop="20dp"
                 android:text="@string/button_next"/>
 
             <Button
+                android:id="@+id/btnPersonalPrev"
                 style="@style/button_prev"
                 android:layout_marginTop="15dp"
                 android:text="@string/button_prev"/>
@@ -87,4 +85,3 @@
 
     </ScrollView>
 
-</LinearLayout>

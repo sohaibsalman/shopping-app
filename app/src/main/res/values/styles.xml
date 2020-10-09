@@ -5,7 +5,14 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    
+
+    <style name="layout_padding">
+        <item name="android:paddingTop">50dp</item>
+        <item name="android:paddingBottom">50dp</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+    </style>
+
     <style name="heading_h1">
         <item name="android:textSize">35dp</item>
     </style>
@@ -41,15 +48,16 @@
         <item name="android:background">#007bff</item>
         <item name="android:drawableRight">@drawable/ic_arrow_right</item>
         <item name="android:textColor">@android:color/background_light</item>
-        <item name="android:paddingHorizontal">15dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
     </style>
 
     <style name="button_prev">
         <item name="android:background">#5a6268</item>
         <item name="android:drawableLeft">@drawable/ic_arrow_right</item>
         <item name="android:textColor">@android:color/background_light</item>
-        <item name="android:paddingHorizontal">15dp</item>
-    </style>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>    </style>
 
     <style name="button_img">
         <item name="android:layout_width">0dp</item>
@@ -57,7 +65,8 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingVertical">40dp</item>
+        <item name="android:paddingTop">40dp</item>
+        <item name="android:paddingBottom">40dp</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:background">@drawable/border</item>
     </style>
@@ -72,7 +81,8 @@
     <style name="label">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginVertical">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="textbox">
