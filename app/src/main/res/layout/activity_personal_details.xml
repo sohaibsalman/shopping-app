@@ -59,7 +59,7 @@
             <EditText
                 style="@style/textbox"
                 android:id="@+id/txtFirstName"
-                android:inputType="textPersonName"
+                android:inputType="textCapSentences"
                 android:background="@drawable/texbox_border" />
             <TextView
                 style="@style/label"
@@ -68,7 +68,7 @@
             <EditText
                 style="@style/textbox"
                 android:id="@+id/txtLastName"
-                android:inputType="textPersonName"
+                android:inputType="textCapSentences"
                 android:background="@drawable/texbox_border" />
             <TextView
                 style="@style/label"
