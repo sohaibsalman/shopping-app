@@ -2,6 +2,7 @@ package com.example.mc_bitf17a040_a1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,7 +77,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                     boxes[selectedBoxIndex]
             );
 
+            Intent confirmation = new Intent(CompanyDetailsActivity.this, ConfirmationActivity.class);
 
+            startActivity(confirmation);
         }
         else if(v.getId() == R.id.btnCompanyPrev)
         {

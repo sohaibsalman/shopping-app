@@ -121,6 +121,12 @@
             android:layout_marginTop="15dp"
             android:text="@string/sending_details"/>
 
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="300dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/ic_ok"/>
     </LinearLayout>
 
 </ScrollView>
