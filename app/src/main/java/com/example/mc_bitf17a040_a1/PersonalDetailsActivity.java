@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +20,11 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
     private EditText txtContact;
 
     private PersonalDetails personalDetails;
+
+    private boolean firstNameEntered = false;
+    private boolean lastNameEntered = false;
+    private boolean emailEntered = false;
+    private boolean contactEntered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,10 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
             }
             else
             {
-                txtFirstName.setBackgroundResource(R.drawable.texbox_border);
+                if(txtFirstName.getText().toString().trim().equals(""))
+                    txtFirstName.setBackgroundResource(R.drawable.texbox_border);
+                else
+                    txtFirstName.setBackgroundResource(R.drawable.textbox_border_green);
             }
         }
         else if(v.getId() == R.id.txtLastName)
@@ -93,7 +100,10 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
             }
             else
             {
-                txtLastName.setBackgroundResource(R.drawable.texbox_border);
+                if(txtLastName.getText().toString().trim().equals(""))
+                    txtLastName.setBackgroundResource(R.drawable.texbox_border);
+                else
+                    txtLastName.setBackgroundResource(R.drawable.textbox_border_green);
             }
         }
         else if(v.getId() == R.id.txtEmail)
@@ -104,7 +114,10 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
             }
             else
             {
-                txtEmail.setBackgroundResource(R.drawable.texbox_border);
+                if(txtEmail.getText().toString().trim().equals(""))
+                    txtEmail.setBackgroundResource(R.drawable.texbox_border);
+                else
+                    txtEmail.setBackgroundResource(R.drawable.textbox_border_green);
             }
         }
         else if(v.getId() == R.id.txtContact)
@@ -115,7 +128,10 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
             }
             else
             {
-                txtContact.setBackgroundResource(R.drawable.texbox_border);
+                if(txtContact.getText().toString().trim().equals(""))
+                    txtContact.setBackgroundResource(R.drawable.texbox_border);
+                else
+                    txtContact.setBackgroundResource(R.drawable.textbox_border_green);
             }
         }
     }
