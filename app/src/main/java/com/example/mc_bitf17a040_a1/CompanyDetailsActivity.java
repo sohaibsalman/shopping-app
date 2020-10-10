@@ -12,7 +12,7 @@ import android.widget.Spinner;
 
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 
-public class CompanyInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinBoxes;
     private EditText txtCompanyName;
@@ -27,7 +27,7 @@ public class CompanyInfoActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_info);
+        setContentView(R.layout.activity_company_details);
 
         spinBoxes = (Spinner) findViewById(R.id.spinBoxes);
         txtCompanyName = (EditText) findViewById(R.id.txtCompanyName);

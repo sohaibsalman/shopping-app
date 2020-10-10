@@ -25,7 +25,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v.getId() == R.id.home_btn_next)
         {
-            Intent newIntent = new Intent(HomeActivity.this, PersonalInfoActivity.class);
+            Intent newIntent = new Intent(HomeActivity.this, PersonalDetailsActivity.class);
 
             startActivity(newIntent);
         }
