@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+
 public class CompanyInfoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinBoxes;

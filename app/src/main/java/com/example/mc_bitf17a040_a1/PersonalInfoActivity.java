@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+
 import java.io.Serializable;
 
 public class PersonalInfoActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
@@ -42,16 +44,16 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         if(v.getId() == R.id.btnPersonalNext)
         {
-            personalDetails = new PersonalDetails();
-
-            personalDetails.firstName = txtFirstName.getText().toString();
-            personalDetails.lastName = txtLastName.getText().toString();
-            personalDetails.email = txtEmail.getText().toString();
-            personalDetails.contact = txtContact.getText().toString();
+            personalDetails = new PersonalDetails(
+                    txtFirstName.getText().toString(),
+                    txtLastName.getText().toString(),
+                    txtEmail.getText().toString(),
+                    txtContact.getText().toString()
+            );
 
             Intent companyScreen = new Intent(this, CompanyInfoActivity.class);
 
-            //companyScreen.putExtra("PersonalDetails", (Serializable) personalDetails);
+            companyScreen.putExtra("PersonalDetails", (Serializable) personalDetails);
 
             startActivity(companyScreen);
         }
