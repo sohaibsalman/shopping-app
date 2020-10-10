@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,8 +58,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         paperSelected = stationarySelected = diskSelected = wasteSelected = false;
 
-        btnNext.setEnabled(false);
-
         btnNext.setOnClickListener(this);
         colPaper.setOnClickListener(this);
         colStationary.setOnClickListener(this);
@@ -73,6 +72,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         if(v.getId() == R.id.home_btn_next)
         {
+            if(!paperSelected && !stationarySelected && !diskSelected && !wasteSelected)
+            {
+                Toast.makeText(getApplicationContext(), "Please select at least 1 item", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent newIntent = new Intent(HomeActivity.this, PersonalDetailsActivity.class);
 
             startActivity(newIntent);
@@ -141,16 +145,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 lblWaste.setTextColor(Color.BLACK);
             }
             wasteSelected = !wasteSelected;
-        }
-
-        // toggle next button state
-        if(!paperSelected && !wasteSelected && !diskSelected && !stationarySelected)
-        {
-            btnNext.setEnabled(false);
-        }
-        else
-        {
-            btnNext.setEnabled(true);
         }
     }
 }
