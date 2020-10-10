@@ -57,6 +57,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         paperSelected = stationarySelected = diskSelected = wasteSelected = false;
 
+        btnNext.setEnabled(false);
+
         btnNext.setOnClickListener(this);
         colPaper.setOnClickListener(this);
         colStationary.setOnClickListener(this);
@@ -139,6 +141,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 lblWaste.setTextColor(Color.BLACK);
             }
             wasteSelected = !wasteSelected;
+        }
+
+        // toggle next button state
+        if(!paperSelected && !wasteSelected && !diskSelected && !stationarySelected)
+        {
+            btnNext.setEnabled(false);
+        }
+        else
+        {
+            btnNext.setEnabled(true);
         }
     }
 }
