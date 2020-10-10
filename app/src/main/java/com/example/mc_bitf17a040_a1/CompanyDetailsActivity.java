@@ -79,6 +79,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
             Intent confirmation = new Intent(CompanyDetailsActivity.this, ConfirmationActivity.class);
 
+            confirmation.putExtra("PersonalDetails", personal);
+            confirmation.putExtra("CompanyDetails", company);
+
             startActivity(confirmation);
         }
         else if(v.getId() == R.id.btnCompanyPrev)
