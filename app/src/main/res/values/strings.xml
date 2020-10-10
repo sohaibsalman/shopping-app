@@ -8,4 +8,7 @@
     </string>
     <string name="button_next">Next</string>
     <string name="button_prev">Previous</string>
+    <string name="thank_you_message">for choosing our application</string>
+    <string name="data_message">We have found your request with following data:</string>
+    <string name="sending_details">Quotation will be sent to your Email ID and Contact Number.</string>
 </resources>

@@ -91,4 +91,8 @@
         <item name="android:padding">5dp</item>
     </style>
 
+    <style name="txt_bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -21,6 +22,8 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     private EditText txtCity;
     private Button btnNext;
     private Button btnPrev;
+
+    private int selectedBoxIndex;
 
     String [] boxes = {"N/A", "1-5 boxes", "1-10 boxes", "1-15 boxes", "1-20 boxes"};
 
@@ -45,15 +48,12 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
         spinBoxes.setAdapter(adapter);
-
-        // Get data from previous activity
-        PersonalDetails p = (PersonalDetails) getIntent().getSerializableExtra("PersonalDetails");
     }
 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        selectedBoxIndex = position;
     }
 
     @Override
@@ -65,6 +65,17 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     public void onClick(View v) {
         if(v.getId() == R.id.btnCompanyNext)
         {
+            // Get data from previous activity
+            PersonalDetails personal = (PersonalDetails) getIntent().getSerializableExtra("PersonalDetails");
+
+            CompanyDetails company = new CompanyDetails(
+                    txtCompanyName.getText().toString(),
+                    txtZip.getText().toString(),
+                    txtState.getText().toString(),
+                    txtCity.getText().toString(),
+                    boxes[selectedBoxIndex]
+            );
+
 
         }
         else if(v.getId() == R.id.btnCompanyPrev)
