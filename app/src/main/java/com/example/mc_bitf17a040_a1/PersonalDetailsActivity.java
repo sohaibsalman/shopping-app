@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 
@@ -20,11 +21,6 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
     private EditText txtContact;
 
     private PersonalDetails personalDetails;
-
-    private boolean firstNameEntered = false;
-    private boolean lastNameEntered = false;
-    private boolean emailEntered = false;
-    private boolean contactEntered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +53,15 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         if(v.getId() == R.id.btnPersonalNext)
         {
+            if(txtFirstName.getText().toString().trim().equals("") ||
+                txtLastName.getText().toString().trim().equals("") ||
+                txtContact.getText().toString().trim().equals("") ||
+                txtEmail.getText().toString().trim().equals(""))
+            {
+                Toast.makeText(getApplicationContext(), "Please enter all fields first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             personalDetails = new PersonalDetails(
                     txtFirstName.getText().toString(),
                     txtLastName.getText().toString(),
