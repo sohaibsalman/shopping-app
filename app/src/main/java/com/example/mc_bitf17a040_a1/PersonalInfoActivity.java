@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class PersonalInfoActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
 
     private Button btnNext;
+    private Button btnPrev;
     private EditText txtFirstName;
     private EditText txtLastName;
     private EditText txtEmail;
@@ -26,12 +27,15 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_personal_info);
 
         btnNext = (Button) findViewById(R.id.btnPersonalNext);
+        btnPrev = (Button) findViewById(R.id.btnPersonalPrev);
+
         txtFirstName = (EditText) findViewById(R.id.txtFirstName);
         txtLastName = (EditText) findViewById(R.id.txtLastName);
         txtContact = (EditText) findViewById(R.id.txtContact);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
 
         btnNext.setOnClickListener(this);
+        btnPrev.setOnClickListener(this);
     }
 
     @Override
@@ -45,11 +49,15 @@ public class PersonalInfoActivity extends AppCompatActivity implements View.OnCl
             personalDetails.email = txtEmail.getText().toString();
             personalDetails.contact = txtContact.getText().toString();
 
-            Intent companyScreen = new Intent(PersonalInfoActivity.this, CompanyInfoActivity.class);
+            Intent companyScreen = new Intent(this, CompanyInfoActivity.class);
 
-            companyScreen.putExtra("PersonalDetails", (Serializable) personalDetails);
+            //companyScreen.putExtra("PersonalDetails", (Serializable) personalDetails);
 
             startActivity(companyScreen);
+        }
+        else if(v.getId() == R.id.btnPersonalPrev)
+        {
+            finish();
         }
     }
 }

@@ -54,7 +54,7 @@
 
     <style name="button_prev">
         <item name="android:background">#5a6268</item>
-        <item name="android:drawableLeft">@drawable/ic_arrow_right</item>
+        <item name="android:drawableLeft">@drawable/arrow_left</item>
         <item name="android:textColor">@android:color/background_light</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:paddingEnd">15dp</item>    </style>
