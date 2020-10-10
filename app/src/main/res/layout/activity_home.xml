@@ -58,7 +58,7 @@
                     android:gravity="center">
 
                     <LinearLayout
-                        android:id="@+id/btnPaper"
+                        android:id="@+id/colPaper"
                         style="@style/button_img">
 
                     <ImageView
@@ -76,7 +76,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/btnStationary"
+                        android:id="@+id/colStationary"
                         style="@style/button_img"
                         android:layout_marginRight="0dp">
 
@@ -107,7 +107,7 @@
                     android:layout_marginTop="20dp">
 
                     <LinearLayout
-                        android:id="@+id/btnDisk"
+                        android:id="@+id/colDisk"
                         style="@style/button_img">
 
                         <ImageView
@@ -124,7 +124,7 @@
                             android:text="Hard Drive" />
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/btnWaste"
+                        android:id="@+id/colWaste"
                         style="@style/button_img"
                         android:layout_marginRight="0dp">
 
@@ -141,8 +141,6 @@
                             android:layout_marginTop="15dp"
                             android:text="Other Waste Material" />
                     </LinearLayout>
-
-
 
                 </TableRow>
             </TableLayout>

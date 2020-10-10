@@ -94,5 +94,7 @@
     <style name="txt_bold">
         <item name="android:textStyle">bold</item>
     </style>
+    
+    <color name="color_blue">#10ACE5</color>
 
 </resources>
