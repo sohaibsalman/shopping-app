@@ -15,14 +15,34 @@
                 style="@style/heading_h2"
                 android:text="@string/main_heading" />
 
-            <TextView
-                style="@style/heading_sub"
-                android:layout_marginTop="10dp"
-                android:text="@string/sub_info" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <TextView
-                style="@style/heading_sub"
-                android:text="to complete your order!" />
+                <TableRow
+                    android:layout_marginTop="10dp">
+                    <LinearLayout>
+                        <TextView
+                            style="@style/heading_sub"
+                            android:layout_width="wrap_content"
+                            android:text="@string/sub_info" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/heading_sub"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="042 357 8579"
+                        android:textColor="#FF5722" />
+                </TableRow>
+                <TextView
+                    style="@style/heading_sub"
+                    android:text="to complete your order!" />
+                <TableRow>
+
+                </TableRow>
+            </TableLayout>
+
 
             <TextView
                 style="@style/heading_4_bold"
