@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
@@ -72,6 +73,16 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     public void onClick(View v) {
         if(v.getId() == R.id.btnCompanyNext)
         {
+            if(txtCompanyName.getText().toString().trim().equals("") ||
+            txtCity.getText().toString().trim().equals("") ||
+            txtState.getText().toString().trim().equals("") ||
+            txtZip.getText().toString().trim().equals("") ||
+            selectedBoxIndex == 0)
+            {
+                Toast.makeText(getApplicationContext(), "Please enter all fields first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Get data from previous activity
             PersonalDetails personal = (PersonalDetails) getIntent().getSerializableExtra("PersonalDetails");
 
