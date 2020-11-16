@@ -2,20 +2,31 @@ package com.example.mc_bitf17a040_a1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +38,9 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
     private ArrayList<Order> orders;
     private ListAdapter adapterOrders;
     private ArrayList<Order> selectedOrders;
+
+    private MenuItem itemEdit;
+    private MenuItem itemDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +61,7 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
     }
 
     private void initListView() {
-        ArrayList<Order> tempList = getFileData();
+        ArrayList<Order> tempList = FileHandler.get(this);
 
         if(tempList.size() > 0)
         {
@@ -69,57 +83,135 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        final ListScreenActivity ref = this;
+        lstOrders.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+        lstOrders.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.main_menu, menu);
+                itemEdit = menu.getItem(0);
+                itemDelete = menu.getItem(1);
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+                if(item.getItemId() == R.id.edit)
+                {
+                    Intent newIntent = new Intent(ref, PersonalDetailsActivity.class);
+                    newIntent.putExtra("Orders", selectedOrders.get(0));
+
+                    startActivity(newIntent);
+                }
+                else if(item.getItemId() == R.id.delete)
+                {
+                    AlertDialog.Builder simple = new AlertDialog.Builder(ref);
+                    simple.setTitle("Remove Order(s)");
+                    simple.setMessage("Do you really want to delete the selected order(s)?");
+                    simple.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteOrder(ref);
+
+                            adapterOrders.notifyDataSetChanged();
+                            mode.finish();
+                        }
+                    });
+                    simple.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    simple.setCancelable(false);
+                    simple.create();
+                    simple.show();
+                }
+                return false;
+            }
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+            {
+                if(checked)
+                {
+                    selectedOrders.add(orders.get(position));
+                }
+                else
+                {
+                    selectedOrders.remove(orders.get(position));
+                }
+
+                adapterOrders.notifyDataSetChanged();
+
+
+                if(lstOrders.getCheckedItemCount() > 1)
+                    itemEdit.setEnabled(false);
+                else
+                    itemEdit.setEnabled(true);
+
+                mode.setTitle(lstOrders.getCheckedItemCount() + " Selected");
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                selectedOrders.clear();
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+        });
+
+        return true;
     }
 
-    private ArrayList<Order> getFileData()
+    private void deleteOrder(AppCompatActivity context)
     {
-        ArrayList<Order> orderList = new ArrayList<>();
-        try
-        {
-            BufferedReader input = new BufferedReader(new InputStreamReader(openFileInput("orders.txt")));
-            String line = input.readLine();
+        try {
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(context.openFileInput("orders.txt")));
+//            FileOutputStream writer = context.openFileOutput("temp.txt", context.MODE_WORLD_READABLE);
 
-            while(line != null)
+            for(int i = 0; i < selectedOrders.size(); i++)
             {
-                StringTokenizer token = new StringTokenizer(line, "|");
+                Order removedOrder = selectedOrders.get(i);
+                // Delete from array list
+                orders.remove(removedOrder);
 
-                String orderId = token.nextToken();
-                String itemName = token.nextToken();
-
-                // Create personal details object
-                PersonalDetails personalDetails = new PersonalDetails(
-                        token.nextToken(),
-                        token.nextToken(),
-                        token.nextToken(),
-                        token.nextToken()
-                );
-
-                // Create company details object
-                CompanyDetails companyDetails = new CompanyDetails(
-                        token.nextToken(),
-                        token.nextToken(),
-                        token.nextToken(),
-                        token.nextToken(),
-                        token.nextToken()
-                );
-
-                // Get Order Date
-                String date = token.nextToken();
-
-                Order temp = new Order(orderId, itemName, personalDetails, companyDetails, new Date(date));
-
-                orderList.add(temp);
-
-                // Get Next Line
-                line = input.readLine();
+//                // Delete from file
+//                String line = reader.readLine();
+//
+//                while(line != null)
+//                {
+//                    StringTokenizer token = new StringTokenizer(line, "|");
+//                    String idInFile = token.nextToken();
+//
+//                    if(!removedOrder.getId().equals(idInFile))
+//                    {
+//                        writer.write(line.getBytes());
+//                    }
+//                    line = reader.readLine();
+//                }
             }
+//            reader.close();
+//            writer.close();
+//
+//            // Delete old file
+//            File file = new File(getFilesDir(), "orders.txt");
+//            file.delete();
+//
+//            // Update the name of new file
+//            file = new File(getFilesDir(), "temp.txt");
+//            file.renameTo(new File("orders.txt"));
+
+            selectedOrders.clear();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
-        return orderList;
     }
 }

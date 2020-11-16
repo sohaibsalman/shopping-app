@@ -48,6 +48,14 @@ public class ListAdapter extends ArrayAdapter {
 
         ((TextView)listItem.findViewById(R.id.lblOrderTime)).setText(order.getDateOfCreation().toString());
 
+        if(selectedOrders.contains(order)) {
+            listItem.setBackgroundColor(context.getResources().getColor(R.color.colorGray));
+        }
+        else {
+            listItem.setBackgroundColor(context.getResources().getColor(android.R.color.white));
+        }
+
+
         return listItem;
     }
 }
