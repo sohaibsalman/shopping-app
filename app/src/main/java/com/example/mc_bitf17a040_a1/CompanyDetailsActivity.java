@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,6 +34,8 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     private Button btnPrev;
 
     private int selectedBoxIndex;
+    private PersonalDetails personal;
+    private List<String> orders;
 
     String [] boxes = {"N/A", "1-5 boxes", "1-10 boxes", "1-15 boxes", "1-20 boxes"};
 
@@ -49,6 +52,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
         btnNext = (Button) findViewById(R.id.btnCompanyNext);
         btnPrev = (Button) findViewById(R.id.btnCompanyPrev);
 
+        // Get data from previous activity
+        personal = (PersonalDetails) getIntent().getSerializableExtra("PersonalDetails");
+        orders = (List<String>) getIntent().getSerializableExtra("itemsList");
+
         txtZip.setOnFocusChangeListener(this);
         txtState.setOnFocusChangeListener(this);
         txtCity.setOnFocusChangeListener(this);
@@ -64,6 +71,20 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
         spinBoxes.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        CompanyDetails details = (CompanyDetails) getIntent().getSerializableExtra("CompanyDetails");
+
+        if(details != null)
+        {
+            txtCompanyName.setText(details.getCompanyName());
+            txtZip.setText(details.getZip());
+            txtState.setText(details.getState());
+            txtCity.setText(details.getCity());
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,10 +110,6 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 return;
             }
 
-            // Get data from previous activity
-            PersonalDetails personal = (PersonalDetails) getIntent().getSerializableExtra("PersonalDetails");
-            List<String> items = (List<String>) getIntent().getSerializableExtra("itemsList");
-
             CompanyDetails company = new CompanyDetails(
                     txtCompanyName.getText().toString(),
                     txtZip.getText().toString(),
@@ -101,30 +118,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                     boxes[selectedBoxIndex]
             );
 
-
-
             // Add to order.txt
-            try
-            {
-                FileOutputStream file = openFileOutput("orders.txt", MODE_WORLD_READABLE);
-
-                for (String item: items) {
-
-                    // Create order
-                    Order order = new Order(item, personal, company, new Date());
-
-                    String line = order.toString();
-
-                    file.write(line.getBytes());
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            FileHandler.add(this, orders, personal, company);
 
             Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
-
             startActivity(newIntent);
         }
         else if(v.getId() == R.id.btnCompanyPrev)

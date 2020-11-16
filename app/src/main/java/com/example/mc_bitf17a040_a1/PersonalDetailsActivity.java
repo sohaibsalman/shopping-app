@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 
 import java.io.Serializable;
@@ -24,6 +25,8 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
     private EditText txtContact;
 
     private PersonalDetails personalDetails;
+    private List<String> items;
+    private boolean isEdited = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
         txtContact = (EditText) findViewById(R.id.txtContact);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
 
+        items = (List<String>) getIntent().getSerializableExtra("itemsList");
+
         txtFirstName.setOnClickListener(this);
         txtLastName.setOnClickListener(this);
         txtContact.setOnClickListener(this);
@@ -50,6 +55,22 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
 
         btnNext.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Order details = (Order) getIntent().getSerializableExtra("Orders");
+        if(details != null)
+        {
+            txtFirstName.setText(details.getPersonalDetails().getFirstName());
+            txtLastName.setText(details.getPersonalDetails().getLastName());
+            txtEmail.setText(details.getPersonalDetails().getEmail());
+            txtContact.setText(details.getPersonalDetails().getContact());
+
+            isEdited = true;
+        }
     }
 
     @Override
@@ -72,12 +93,16 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
                     txtContact.getText().toString()
             );
 
-            List<String> items = (List<String>) getIntent().getSerializableExtra("itemsList");
-
             Intent companyScreen = new Intent(this, CompanyDetailsActivity.class);
 
             companyScreen.putExtra("PersonalDetails", personalDetails);
             companyScreen.putExtra("itemsList", (Serializable) items);
+
+            if(isEdited)
+            {
+                Order details = (Order) getIntent().getSerializableExtra("Orders");
+                companyScreen.putExtra("CompanyDetails", details.getCompanyDetails());
+            }
 
             startActivity(companyScreen);
         }
