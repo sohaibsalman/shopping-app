@@ -9,6 +9,13 @@ public class PersonalDetails implements Serializable
     private String email;
     private String contact;
 
+    public PersonalDetails() {
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+        this.contact = "";
+    }
+
     public PersonalDetails(String firstName, String lastName, String email, String contact)
     {
         this.firstName = firstName;
@@ -47,5 +54,10 @@ public class PersonalDetails implements Serializable
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + "|" + lastName + "|" + email + "|" + contact;
     }
 }

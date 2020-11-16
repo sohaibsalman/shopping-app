@@ -94,6 +94,13 @@
     <style name="txt_bold">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="list_item_sub">
+        <item name="android:textSize">10dp</item>
+        <item name="android:layout_marginRight">15px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
     
     <color name="color_blue">#10ACE5</color>
 

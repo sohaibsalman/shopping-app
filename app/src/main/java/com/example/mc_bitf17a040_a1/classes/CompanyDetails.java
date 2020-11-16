@@ -10,6 +10,14 @@ public class CompanyDetails implements Serializable
     private String city;
     private String noOfBoxes;
 
+    public CompanyDetails() {
+        this.companyName = "";
+        this.zip = "";
+        this.state = "";
+        this.city = "";
+        this.noOfBoxes = "";
+    }
+
     public CompanyDetails(String companyName, String zip, String state, String city, String noOfBoxes) {
         this.companyName = companyName;
         this.zip = zip;
@@ -56,5 +64,10 @@ public class CompanyDetails implements Serializable
 
     public void setNoOfBoxes(String noOfBoxes) {
         this.noOfBoxes = noOfBoxes;
+    }
+
+    @Override
+    public String toString() {
+        return companyName + "|" + zip + "|" + state + "|" + city+ "|" + noOfBoxes;
     }
 }

@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class PersonalDetailsActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener{
 
     private Button btnNext;
@@ -69,9 +72,12 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
                     txtContact.getText().toString()
             );
 
+            List<String> items = (List<String>) getIntent().getSerializableExtra("itemsList");
+
             Intent companyScreen = new Intent(this, CompanyDetailsActivity.class);
 
             companyScreen.putExtra("PersonalDetails", personalDetails);
+            companyScreen.putExtra("itemsList", (Serializable) items);
 
             startActivity(companyScreen);
         }

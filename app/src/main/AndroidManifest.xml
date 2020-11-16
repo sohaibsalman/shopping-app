@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ListScreenActivity"></activity>
+        <activity android:name=".ListScreen" />
         <activity android:name=".ConfirmationActivity" />
-        <activity android:name=".CompanyDetailsActivity"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".PersonalDetailsActivity"
-            android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".HomeActivity"
+            android:name=".CompanyDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".PersonalDetailsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".OrderItemsActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"

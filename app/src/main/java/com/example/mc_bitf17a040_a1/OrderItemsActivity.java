@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,7 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class OrderItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnNext;
     private LinearLayout colPaper;
@@ -37,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_order_items);
 
         btnNext = (Button) findViewById(R.id.home_btn_next);
 
@@ -77,7 +86,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "Please select at least 1 item", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Intent newIntent = new Intent(HomeActivity.this, PersonalDetailsActivity.class);
+
+            List<String> items = new ArrayList<>();
+            if(paperSelected)
+                items.add("Papers");
+            if(wasteSelected)
+                items.add("Waste Material");
+            if(diskSelected)
+                items.add("Hard Disk");
+            if(stationarySelected)
+                items.add("Stationary Items");
+
+
+            Intent newIntent = new Intent(OrderItemsActivity.this, PersonalDetailsActivity.class);
+            newIntent.putExtra("itemsList", (Serializable) items);
+
 
             startActivity(newIntent);
         }

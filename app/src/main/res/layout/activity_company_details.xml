@@ -97,7 +97,7 @@
             <Spinner
                 style="@style/textbox"
                 android:id="@+id/spinBoxes"
-                android:background="@drawable/texbox_border" />/>
+                android:background="@drawable/texbox_border" />
 
             <Button
                 android:id="@+id/btnCompanyNext"
