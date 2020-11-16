@@ -2,9 +2,15 @@ package com.example.mc_bitf17a040_a1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -69,8 +75,88 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        final ListScreenActivity ref = this;
+        lstOrders.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+        lstOrders.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.main_menu, menu);
+
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                if(item.getItemId() == R.id.edit)
+                {
+                    Intent newIntent = new Intent(ref, PersonalDetailsActivity.class);
+
+                    startActivity(newIntent);
+                }
+                else if(item.getItemId() == R.id.delete)
+                {
+                    AlertDialog.Builder simple = new AlertDialog.Builder(ref);
+                    simple.setTitle("Remove Order");
+                    simple.setMessage("Do you really want to delete this order?");
+                    simple.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Delete from array list
+                            for(int i = 0; i < selectedOrders.size(); i++)
+                            {
+                                orders.remove(selectedOrders.get(i));
+                            }
+
+                            adapterOrders.notifyDataSetChanged();
+                        }
+                    });
+                    simple.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    simple.setCancelable(false);
+                    simple.create();
+                    simple.show();
+
+                    mode.finish();
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+            {
+                if(checked)
+                {
+                    selectedOrders.add(orders.get(position));
+                }
+                else
+                {
+                    selectedOrders.remove(orders.get(position));
+                }
+
+                adapterOrders.notifyDataSetChanged();
+                mode.setTitle(lstOrders.getCheckedItemCount() + " Selected");
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                selectedOrders.clear();
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+        });
+
+        return true;
     }
 
     private ArrayList<Order> getFileData()
