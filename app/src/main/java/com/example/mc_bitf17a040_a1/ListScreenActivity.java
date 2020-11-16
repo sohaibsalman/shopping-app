@@ -77,6 +77,7 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
             {
                 StringTokenizer token = new StringTokenizer(line, "|");
 
+                String orderId = token.nextToken();
                 String itemName = token.nextToken();
 
                 // Create personal details object
@@ -99,7 +100,7 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
                 // Get Order Date
                 String date = token.nextToken();
 
-                Order temp = new Order(itemName, personalDetails, companyDetails, new Date(date));
+                Order temp = new Order(orderId, itemName, personalDetails, companyDetails, new Date(date));
 
                 orderList.add(temp);
 

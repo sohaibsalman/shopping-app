@@ -1,20 +1,32 @@
 package com.example.mc_bitf17a040_a1.classes;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Order {
+    private String id;
     private String itemName;
     private PersonalDetails personalDetails;
     private CompanyDetails companyDetails;
     private Date dateOfCreation;
 
     public Order() {
+        this.id = UUID.randomUUID().toString();
         this.itemName = "";
         this.personalDetails = new PersonalDetails();
         this.companyDetails = new CompanyDetails();
         this.dateOfCreation = new Date();
     }
     public Order(String itemName, PersonalDetails personalDetails, CompanyDetails companyDetails, Date dateOfCreation) {
+        this.id = UUID.randomUUID().toString();
+        this.itemName = itemName;
+        this.personalDetails = personalDetails;
+        this.companyDetails = companyDetails;
+        this.dateOfCreation = dateOfCreation;
+    }
+
+    public Order(String id, String itemName, PersonalDetails personalDetails, CompanyDetails companyDetails, Date dateOfCreation) {
+        this.id = id;
         this.itemName = itemName;
         this.personalDetails = personalDetails;
         this.companyDetails = companyDetails;
@@ -53,8 +65,16 @@ public class Order {
         this.dateOfCreation = dateOfCreation;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return itemName + "|" + personalDetails.toString() + "|" + companyDetails.toString() + "|" + dateOfCreation.toString() + "\n";
+        return id + "|" + itemName + "|" + personalDetails.toString() + "|" + companyDetails.toString() + "|" + dateOfCreation.toString() + "\n";
     }
 }
