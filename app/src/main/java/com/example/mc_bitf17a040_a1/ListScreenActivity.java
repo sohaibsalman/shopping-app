@@ -2,6 +2,7 @@ package com.example.mc_bitf17a040_a1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,6 +42,8 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
         lstOrders.setAdapter(adapterOrders);
 
         initListView();
+        lstOrders.setOnItemClickListener(this);
+        lstOrders.setOnItemLongClickListener(this);
     }
 
     private void initListView() {
@@ -56,8 +59,13 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        Order order = orders.get(position);
+        Intent newIntent = new Intent(this, ConfirmationActivity.class);
+        newIntent.putExtra("order", order);
 
+        startActivity(newIntent);
     }
 
     @Override

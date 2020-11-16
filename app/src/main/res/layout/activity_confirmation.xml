@@ -89,6 +89,13 @@
 
         <TextView
             style="@style/txt_bold"
+            android:id="@+id/lblCnfrmOrderName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order Item Name:"/>
+
+        <TextView
+            style="@style/txt_bold"
             android:id="@+id/lblEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,6 +121,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No. of Boxes:"/>
+
+        <TextView
+            style="@style/txt_bold"
+            android:id="@+id/lblCnfrmDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order Date:"/>
 
         <TextView
             style="@style/txt_bold"

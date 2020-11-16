@@ -1,9 +1,11 @@
 package com.example.mc_bitf17a040_a1.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class Order {
+public class Order implements Serializable
+{
     private String id;
     private String itemName;
     private PersonalDetails personalDetails;
