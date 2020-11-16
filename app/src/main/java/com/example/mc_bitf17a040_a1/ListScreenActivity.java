@@ -39,6 +39,9 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
     private ListAdapter adapterOrders;
     private ArrayList<Order> selectedOrders;
 
+    private MenuItem itemEdit;
+    private MenuItem itemDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +92,8 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 mode.getMenuInflater().inflate(R.menu.main_menu, menu);
-
+                itemEdit = menu.getItem(0);
+                itemDelete = menu.getItem(1);
                 return true;
             }
 
@@ -141,6 +145,13 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
                 }
 
                 adapterOrders.notifyDataSetChanged();
+
+
+                if(lstOrders.getCheckedItemCount() > 1)
+                    itemEdit.setEnabled(false);
+                else
+                    itemEdit.setEnabled(true);
+
                 mode.setTitle(lstOrders.getCheckedItemCount() + " Selected");
             }
 
