@@ -13,7 +13,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
+import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.List;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         View.OnClickListener, View.OnFocusChangeListener {
@@ -85,6 +91,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
             // Get data from previous activity
             PersonalDetails personal = (PersonalDetails) getIntent().getSerializableExtra("PersonalDetails");
+            List<String> items = (List<String>) getIntent().getSerializableExtra("itemsList");
 
             CompanyDetails company = new CompanyDetails(
                     txtCompanyName.getText().toString(),
@@ -94,12 +101,31 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                     boxes[selectedBoxIndex]
             );
 
-            Intent confirmation = new Intent(CompanyDetailsActivity.this, ConfirmationActivity.class);
 
-            confirmation.putExtra("PersonalDetails", personal);
-            confirmation.putExtra("CompanyDetails", company);
 
-            startActivity(confirmation);
+            // Add to order.txt
+            try
+            {
+                FileOutputStream file = openFileOutput("orders.txt", MODE_WORLD_READABLE);
+
+                for (String item: items) {
+
+                    // Create order
+                    Order order = new Order(item, personal, company, new Date());
+
+                    String line = order.toString();
+
+                    file.write(line.getBytes());
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
+
+            startActivity(newIntent);
         }
         else if(v.getId() == R.id.btnCompanyPrev)
         {
