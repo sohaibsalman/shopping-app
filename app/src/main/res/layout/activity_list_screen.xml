@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     >
 
+    <SearchView
+        android:id="@+id/searchViewOrders"
+        android:queryHint="Search Order Here"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:id="@+id/lstOrders"
         android:layout_width="match_parent"

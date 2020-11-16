@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
@@ -35,6 +36,7 @@ import java.util.StringTokenizer;
 public class ListScreenActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
 
     private ListView lstOrders;
+    private SearchView searchViewOrders;
     private ArrayList<Order> orders;
     private ListAdapter adapterOrders;
     private ArrayList<Order> selectedOrders;
@@ -53,6 +55,8 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
         adapterOrders = new ListAdapter(this, orders, selectedOrders);
 
         lstOrders = (ListView)findViewById(R.id.lstOrders);
+        searchViewOrders = (SearchView) findViewById(R.id.searchViewOrders);
+
         lstOrders.setAdapter(adapterOrders);
 
         initListView();
