@@ -22,7 +22,7 @@ public class FileHandler {
     {
         try
         {
-            FileOutputStream file = context.openFileOutput("orders.txt", context.MODE_WORLD_READABLE);
+            FileOutputStream file = context.openFileOutput("orders.txt", context.MODE_APPEND);
 
             for (String item: orders) {
 

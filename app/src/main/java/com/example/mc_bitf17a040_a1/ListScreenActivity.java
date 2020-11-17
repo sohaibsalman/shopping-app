@@ -19,6 +19,7 @@ import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class ListScreenActivity extends AppCompatActivity implements
+        View.OnClickListener,
         ListView.OnItemClickListener,
         ListView.OnItemLongClickListener, SearchView.OnQueryTextListener {
 
@@ -47,6 +49,7 @@ public class ListScreenActivity extends AppCompatActivity implements
     private SearchView searchViewOrders;
     private MenuItem itemEdit;
     private MenuItem itemDelete;
+    private FloatingActionButton btnFloatOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class ListScreenActivity extends AppCompatActivity implements
 
         lstOrders = (ListView)findViewById(R.id.lstOrders);
         searchViewOrders = (SearchView) findViewById(R.id.searchViewOrders);
+        btnFloatOrder = (FloatingActionButton) findViewById(R.id.btnFloatOrder);
 
         lstOrders.setAdapter(adapterOrders);
 
@@ -69,6 +73,7 @@ public class ListScreenActivity extends AppCompatActivity implements
         lstOrders.setOnItemClickListener(this);
         lstOrders.setOnItemLongClickListener(this);
         searchViewOrders.setOnQueryTextListener(this);
+        btnFloatOrder.setOnClickListener(this);
     }
 
     private void initListView() {
@@ -81,6 +86,16 @@ public class ListScreenActivity extends AppCompatActivity implements
                 allOrders.add(order);
                 adapterOrders.notifyDataSetChanged();
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        if(v.getId() == R.id.btnFloatOrder)
+        {
+            Intent newIntent = new Intent(this, OrderItemsActivity.class);
+            startActivity(newIntent);
         }
     }
 
