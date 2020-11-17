@@ -34,6 +34,16 @@ public class Order implements Serializable
         this.companyDetails = companyDetails;
         this.dateOfCreation = dateOfCreation;
     }
+
+    public Order(Order ref)
+    {
+        this.id = ref.id;
+        this.itemName = ref.itemName;
+        this.personalDetails = ref.personalDetails;
+        this.companyDetails = ref.companyDetails;
+        this.dateOfCreation = ref.dateOfCreation;
+    }
+
     public String getItemName() {
         return itemName;
     }

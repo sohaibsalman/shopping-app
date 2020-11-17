@@ -33,7 +33,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class ListScreenActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
+public class ListScreenActivity extends AppCompatActivity implements
+        ListView.OnItemClickListener,
+        ListView.OnItemLongClickListener, SearchView.OnQueryTextListener {
 
     private ListView lstOrders;
     private SearchView searchViewOrders;
@@ -62,6 +64,7 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
         initListView();
         lstOrders.setOnItemClickListener(this);
         lstOrders.setOnItemLongClickListener(this);
+        searchViewOrders.setOnQueryTextListener(this);
     }
 
     private void initListView() {
@@ -174,6 +177,17 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
         return true;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapterOrders.getFilter().filter(newText);
+        return false;
+    }
+
     private void deleteOrder(AppCompatActivity context)
     {
         try {
@@ -218,4 +232,6 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
             e.printStackTrace();
         }
     }
+
+
 }

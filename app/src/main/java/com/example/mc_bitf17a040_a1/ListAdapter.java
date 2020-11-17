@@ -5,17 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import com.example.mc_bitf17a040_a1.classes.Order;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends ArrayAdapter {
+public class ListAdapter extends ArrayAdapter implements Filterable {
     private Context context;
     private ArrayList<Order> orders;
+    private ArrayList<Order> originalData;
     private ArrayList<Order> selectedOrders;
 
     public ListAdapter(Context context, ArrayList<Order> orders, ArrayList<Order> selectedOrders) {
@@ -55,8 +56,74 @@ public class ListAdapter extends ArrayAdapter {
             listItem.setBackgroundColor(context.getResources().getColor(android.R.color.white));
         }
 
-
         return listItem;
     }
+
+    @Override
+    public int getCount() {
+        return orders.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return orders.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return listFilter;
+    }
+
+    private Filter listFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence nameSubStr) {
+
+            FilterResults results = new FilterResults();
+
+            if(originalData == null)
+                originalData = new ArrayList<>();
+            originalData.clear();
+
+            for(int i = 0; i < orders.size(); i++) {
+                originalData.add(orders.get(i));
+            }
+
+            if (nameSubStr != null && nameSubStr.length() > 0) {
+
+                ArrayList<Order> filterList = new ArrayList<Order>();
+                for (int i = 0; i < originalData.size(); i++) {
+
+                    String itemName = originalData.get(i).getItemName().toUpperCase();
+                    nameSubStr = nameSubStr.toString().toUpperCase();
+
+                    if ((itemName).contains(nameSubStr)) {
+
+                        Order s = new Order(originalData.get(i));
+                        filterList.add(s);
+                    }
+                }
+                results.count = filterList.size();
+                results.values = filterList;
+            }
+            else {
+                results.count = originalData.size();
+                results.values = originalData;
+            }
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            orders = (ArrayList<Order>)results.values;
+            notifyDataSetChanged();
+        }
+    };
+
 }
 
