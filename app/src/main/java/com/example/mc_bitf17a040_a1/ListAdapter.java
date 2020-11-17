@@ -16,14 +16,16 @@ import java.util.ArrayList;
 public class ListAdapter extends ArrayAdapter implements Filterable {
     private Context context;
     private ArrayList<Order> orders;
-    private ArrayList<Order> originalData;
+    private ArrayList<Order> filteredData;
+    private ArrayList<Order> allOrders;
     private ArrayList<Order> selectedOrders;
 
-    public ListAdapter(Context context, ArrayList<Order> orders, ArrayList<Order> selectedOrders) {
+    public ListAdapter(Context context, ArrayList<Order> orders, ArrayList<Order> selectedOrders, ArrayList<Order> allOrders) {
         super(context, R.layout.list_item, orders);
         this.context = context;
         this.orders = orders;
         this.selectedOrders = selectedOrders;
+        this.allOrders = allOrders;
     }
 
     @Override
@@ -85,25 +87,25 @@ public class ListAdapter extends ArrayAdapter implements Filterable {
 
             FilterResults results = new FilterResults();
 
-            if(originalData == null)
-                originalData = new ArrayList<>();
-            originalData.clear();
+            if(filteredData == null)
+                filteredData = new ArrayList<>();
+            filteredData.clear();
 
             for(int i = 0; i < orders.size(); i++) {
-                originalData.add(orders.get(i));
+                filteredData.add(orders.get(i));
             }
 
             if (nameSubStr != null && nameSubStr.length() > 0) {
 
                 ArrayList<Order> filterList = new ArrayList<Order>();
-                for (int i = 0; i < originalData.size(); i++) {
+                for (int i = 0; i < filteredData.size(); i++) {
 
-                    String itemName = originalData.get(i).getItemName().toUpperCase();
+                    String itemName = filteredData.get(i).getItemName().toUpperCase();
                     nameSubStr = nameSubStr.toString().toUpperCase();
 
                     if ((itemName).contains(nameSubStr)) {
 
-                        Order s = new Order(originalData.get(i));
+                        Order s = new Order(filteredData.get(i));
                         filterList.add(s);
                     }
                 }
@@ -111,8 +113,8 @@ public class ListAdapter extends ArrayAdapter implements Filterable {
                 results.values = filterList;
             }
             else {
-                results.count = originalData.size();
-                results.values = originalData;
+                results.count = allOrders.size();
+                results.values = allOrders;
             }
 
             return results;
@@ -121,7 +123,6 @@ public class ListAdapter extends ArrayAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             orders = (ArrayList<Order>)results.values;
-            notifyDataSetChanged();
         }
     };
 

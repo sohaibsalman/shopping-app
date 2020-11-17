@@ -37,12 +37,14 @@ public class ListScreenActivity extends AppCompatActivity implements
         ListView.OnItemClickListener,
         ListView.OnItemLongClickListener, SearchView.OnQueryTextListener {
 
+    private ArrayList<Order> orders;
+    private ArrayList<Order> selectedOrders;
+    private ArrayList<Order> allOrders;
+
+    private ListAdapter adapterOrders;
+
     private ListView lstOrders;
     private SearchView searchViewOrders;
-    private ArrayList<Order> orders;
-    private ListAdapter adapterOrders;
-    private ArrayList<Order> selectedOrders;
-
     private MenuItem itemEdit;
     private MenuItem itemDelete;
 
@@ -53,8 +55,9 @@ public class ListScreenActivity extends AppCompatActivity implements
 
         orders = new ArrayList<>();
         selectedOrders = new ArrayList<>();
+        allOrders = new ArrayList<>();
 
-        adapterOrders = new ListAdapter(this, orders, selectedOrders);
+        adapterOrders = new ListAdapter(this, orders, selectedOrders, allOrders);
 
         lstOrders = (ListView)findViewById(R.id.lstOrders);
         searchViewOrders = (SearchView) findViewById(R.id.searchViewOrders);
@@ -62,6 +65,7 @@ public class ListScreenActivity extends AppCompatActivity implements
         lstOrders.setAdapter(adapterOrders);
 
         initListView();
+
         lstOrders.setOnItemClickListener(this);
         lstOrders.setOnItemLongClickListener(this);
         searchViewOrders.setOnQueryTextListener(this);
@@ -74,6 +78,7 @@ public class ListScreenActivity extends AppCompatActivity implements
         {
             for (Order order: tempList) {
                 orders.add(order);
+                allOrders.add(order);
                 adapterOrders.notifyDataSetChanged();
             }
         }
@@ -185,6 +190,7 @@ public class ListScreenActivity extends AppCompatActivity implements
     @Override
     public boolean onQueryTextChange(String newText) {
         adapterOrders.getFilter().filter(newText);
+        adapterOrders.notifyDataSetChanged();
         return false;
     }
 
