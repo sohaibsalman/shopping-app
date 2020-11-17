@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
@@ -32,13 +33,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class ListScreenActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
+public class ListScreenActivity extends AppCompatActivity implements
+        ListView.OnItemClickListener,
+        ListView.OnItemLongClickListener, SearchView.OnQueryTextListener {
+
+    private ArrayList<Order> orders;
+    private ArrayList<Order> selectedOrders;
+    private ArrayList<Order> allOrders;
+
+    private ListAdapter adapterOrders;
 
     private ListView lstOrders;
-    private ArrayList<Order> orders;
-    private ListAdapter adapterOrders;
-    private ArrayList<Order> selectedOrders;
-
+    private SearchView searchViewOrders;
     private MenuItem itemEdit;
     private MenuItem itemDelete;
 
@@ -49,15 +55,20 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
 
         orders = new ArrayList<>();
         selectedOrders = new ArrayList<>();
+        allOrders = new ArrayList<>();
 
-        adapterOrders = new ListAdapter(this, orders, selectedOrders);
+        adapterOrders = new ListAdapter(this, orders, selectedOrders, allOrders);
 
         lstOrders = (ListView)findViewById(R.id.lstOrders);
+        searchViewOrders = (SearchView) findViewById(R.id.searchViewOrders);
+
         lstOrders.setAdapter(adapterOrders);
 
         initListView();
+
         lstOrders.setOnItemClickListener(this);
         lstOrders.setOnItemLongClickListener(this);
+        searchViewOrders.setOnQueryTextListener(this);
     }
 
     private void initListView() {
@@ -67,6 +78,7 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
         {
             for (Order order: tempList) {
                 orders.add(order);
+                allOrders.add(order);
                 adapterOrders.notifyDataSetChanged();
             }
         }
@@ -170,6 +182,18 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
         return true;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapterOrders.getFilter().filter(newText);
+        adapterOrders.notifyDataSetChanged();
+        return false;
+    }
+
     private void deleteOrder(AppCompatActivity context)
     {
         try {
@@ -214,4 +238,6 @@ public class ListScreenActivity extends AppCompatActivity implements ListView.On
             e.printStackTrace();
         }
     }
+
+
 }
