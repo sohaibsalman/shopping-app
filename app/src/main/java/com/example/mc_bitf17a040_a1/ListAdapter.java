@@ -91,8 +91,8 @@ public class ListAdapter extends ArrayAdapter implements Filterable {
                 filteredData = new ArrayList<>();
             filteredData.clear();
 
-            for(int i = 0; i < orders.size(); i++) {
-                filteredData.add(orders.get(i));
+            for(int i = 0; i < allOrders.size(); i++) {
+                filteredData.add(allOrders.get(i));
             }
 
             if (nameSubStr != null && nameSubStr.length() > 0) {
@@ -100,10 +100,19 @@ public class ListAdapter extends ArrayAdapter implements Filterable {
                 ArrayList<Order> filterList = new ArrayList<Order>();
                 for (int i = 0; i < filteredData.size(); i++) {
 
-                    String itemName = filteredData.get(i).getItemName().toUpperCase();
+                    String firstName = filteredData.get(i).getPersonalDetails().getFirstName().toUpperCase();
+                    String lastName = filteredData.get(i).getPersonalDetails().getLastName().toUpperCase();
+                    String state = filteredData.get(i).getCompanyDetails().getState().toUpperCase();
+                    String city = filteredData.get(i).getCompanyDetails().getCity().toUpperCase();
+
                     nameSubStr = nameSubStr.toString().toUpperCase();
 
-                    if ((itemName).contains(nameSubStr)) {
+                    boolean expression = firstName.contains(nameSubStr)
+                            || lastName.contains(nameSubStr)
+                            || state.contains(nameSubStr)
+                            || city.contains(nameSubStr);
+
+                    if (expression) {
 
                         Order s = new Order(filteredData.get(i));
                         filterList.add(s);
