@@ -76,18 +76,9 @@ public class ListScreenActivity extends AppCompatActivity implements
         btnFloatOrder.setOnClickListener(this);
     }
 
-    private void initListView() {
-        ArrayList<Order> tempList = FileHandler.get(this);
-
-        if(tempList.size() > 0)
-        {
-            for (Order order: tempList) {
-                orders.add(order);
-                allOrders.add(order);
-                adapterOrders.notifyDataSetChanged();
-            }
-        }
-    }
+    /********************************
+     Listeners
+     ********************************/
 
     @Override
     public void onClick(View v)
@@ -129,7 +120,11 @@ public class ListScreenActivity extends AppCompatActivity implements
                 if(item.getItemId() == R.id.edit)
                 {
                     Intent newIntent = new Intent(ref, PersonalDetailsActivity.class);
-                    newIntent.putExtra("Orders", selectedOrders.get(0));
+
+                    newIntent.putExtra("EditOrder", true);
+                    newIntent.putExtra("Orders", orders);
+                    newIntent.putExtra("SelectedOrder", selectedOrders.get(0));
+
 
                     startActivity(newIntent);
                 }
@@ -207,6 +202,23 @@ public class ListScreenActivity extends AppCompatActivity implements
         adapterOrders.getFilter().filter(newText);
         adapterOrders.notifyDataSetChanged();
         return false;
+    }
+
+    /********************************
+     Utility functions
+     ********************************/
+
+    private void initListView() {
+        ArrayList<Order> tempList = FileHandler.get(this);
+
+        if(tempList.size() > 0)
+        {
+            for (Order order: tempList) {
+                orders.add(order);
+                allOrders.add(order);
+                adapterOrders.notifyDataSetChanged();
+            }
+        }
     }
 
     private void deleteOrder(AppCompatActivity context) {

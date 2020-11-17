@@ -19,6 +19,7 @@ import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,8 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     private int selectedBoxIndex;
     private PersonalDetails personal;
     private List<String> orders;
+
+    private boolean isForEdit;
 
     String [] boxes = {"N/A", "1-5 boxes", "1-10 boxes", "1-15 boxes", "1-20 boxes"};
 
@@ -75,14 +78,19 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     protected void onResume() {
         super.onResume();
 
-        CompanyDetails details = (CompanyDetails) getIntent().getSerializableExtra("CompanyDetails");
+        isForEdit = (boolean) getIntent().getBooleanExtra("isForEdit", false);
 
-        if(details != null)
+        if(isForEdit)
         {
-            txtCompanyName.setText(details.getCompanyName());
-            txtZip.setText(details.getZip());
-            txtState.setText(details.getState());
-            txtCity.setText(details.getCity());
+            Order details = (Order) getIntent().getSerializableExtra("SelectedOrder");
+
+            if(details != null)
+            {
+                txtCompanyName.setText(details.getCompanyDetails().getCompanyName());
+                txtZip.setText(details.getCompanyDetails().getZip());
+                txtState.setText(details.getCompanyDetails().getState());
+                txtCity.setText(details.getCompanyDetails().getCity());
+            }
         }
     }
 
@@ -118,8 +126,36 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                     boxes[selectedBoxIndex]
             );
 
-            // Add to order.txt
-            FileHandler.add(this, orders, personal, company);
+            if(!isForEdit)
+            {
+                // Add to order.txt
+                FileHandler.add(this, orders, personal, company);
+            }
+            else
+            {
+                ArrayList<Order> orders = (ArrayList<Order>) getIntent().getSerializableExtra("Orders");
+                Order selected = (Order) getIntent().getSerializableExtra("SelectedOrder");
+
+                int index = -1;
+
+                for(int i = 0; i < orders.size(); i++)
+                {
+                    Order temp = orders.get(i);
+                    if(temp.getId().equals(selected.getId()))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                Order updatedOrder = orders.get(index);
+                orders.remove(index);
+                updatedOrder.setCompanyDetails(company);
+
+                orders.add(updatedOrder);
+
+                FileHandler.update(this, orders);
+            }
 
             Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
             startActivity(newIntent);
