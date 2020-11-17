@@ -209,50 +209,18 @@ public class ListScreenActivity extends AppCompatActivity implements
         return false;
     }
 
-    private void deleteOrder(AppCompatActivity context)
-    {
-        try {
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(context.openFileInput("orders.txt")));
-//            FileOutputStream writer = context.openFileOutput("temp.txt", context.MODE_WORLD_READABLE);
+    private void deleteOrder(AppCompatActivity context) {
 
-            for(int i = 0; i < selectedOrders.size(); i++)
-            {
-                Order removedOrder = selectedOrders.get(i);
-                // Delete from array list
-                orders.remove(removedOrder);
-
-//                // Delete from file
-//                String line = reader.readLine();
-//
-//                while(line != null)
-//                {
-//                    StringTokenizer token = new StringTokenizer(line, "|");
-//                    String idInFile = token.nextToken();
-//
-//                    if(!removedOrder.getId().equals(idInFile))
-//                    {
-//                        writer.write(line.getBytes());
-//                    }
-//                    line = reader.readLine();
-//                }
-            }
-//            reader.close();
-//            writer.close();
-//
-//            // Delete old file
-//            File file = new File(getFilesDir(), "orders.txt");
-//            file.delete();
-//
-//            // Update the name of new file
-//            file = new File(getFilesDir(), "temp.txt");
-//            file.renameTo(new File("orders.txt"));
-
-            selectedOrders.clear();
+        // Delete from array list
+        for (int i = 0; i < selectedOrders.size(); i++) {
+            Order removedOrder = selectedOrders.get(i);
+            orders.remove(removedOrder);
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        // Delete data from file
+        FileHandler.update(context, this.orders);
+
+        selectedOrders.clear();
     }
 
-
-}
+}   // end of class
