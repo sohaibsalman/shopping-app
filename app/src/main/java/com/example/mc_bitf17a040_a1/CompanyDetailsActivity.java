@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -238,20 +239,47 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
         }
     }
 
-    private void sendNotifications()
+    private boolean sendNotifications()
     {
         // Show notification in notification bar
         showNotification();
 
         // Send SMS Notification
         sendSMS();
+
+        // Send email Notification
+        sendEmail();
+
+        return true;
+    }
+
+    private void sendEmail()
+    {
+        String emailAddress = personal.getEmail().trim();
+        String message = "Dear " + personal.getFirstName() + ", your order has been placed successfully. Thank you for choosing us!";
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setData(Uri.parse("mailto:"));
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_EMAIL, emailAddress);
+        i.putExtra(Intent.EXTRA_SUBJECT, "Shopping App - Order Placed");
+        i.putExtra(Intent.EXTRA_TEXT, message);
+
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+            finish();
+        }
+        catch (Exception ex) {
+        }
+
     }
 
     private void sendSMS() {
-        if(checkSMSPermission(Manifest.permission.SEND_SMS))
+        if(checkPermission(Manifest.permission.SEND_SMS))
         {
             String message = "Dear " + personal.getFirstName() + ", your order has been placed successfully. Thank you for choosing us!";
-            String destination = personal.getContact().trim();
+            // String destination = personal.getContact().trim();
+            String destination = "03164141068"; 
 
             // Permission Granted, send sms
             SmsManager smsManager = SmsManager.getDefault();
@@ -284,7 +312,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
     }
 
 
-    private boolean checkSMSPermission(String permission)
+    private boolean checkPermission(String permission)
     {
         int check = ContextCompat.checkSelfPermission(this, permission);
         return (check == PackageManager.PERMISSION_GRANTED);
