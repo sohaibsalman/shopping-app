@@ -1,14 +1,19 @@
 package com.example.mc_bitf17a040_a1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +36,7 @@ import java.util.List;
 public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         View.OnClickListener, View.OnFocusChangeListener {
 
+    private static final int SEND_SMS_PERMISSION_REQUEST_CODE = 1 ;
     private Spinner spinBoxes;
     private EditText txtCompanyName;
     private EditText txtZip;
@@ -234,10 +240,33 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
     private void sendNotifications()
     {
+        // Show notification in notification bar
         showNotification();
+
+        // Send SMS Notification
+        sendSMS();
+    }
+
+    private void sendSMS() {
+        if(checkSMSPermission(Manifest.permission.SEND_SMS))
+        {
+            String message = "Dear " + personal.getFirstName() + ", your order has been placed successfully. Thank you for choosing us!";
+            String destination = personal.getContact().trim();
+
+            // Permission Granted, send sms
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(destination, null, message, null, null);
+            Toast.makeText(this, "SMS sent successfully", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            // Request for permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
+        }
     }
 
     private void showNotification() {
+        String message = "Dear Customer, your order has been placed!";
         Intent i = new Intent(this, ListScreenActivity.class);
         PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
         Resources r = getResources();
@@ -245,7 +274,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 .setTicker(r.getString(R.string.app_name))
                 .setSmallIcon(android.R.drawable.ic_menu_report_image)
                 .setContentTitle("Shopping App")
-                .setContentText("Congrats! Your Order is placed!")
+                .setContentText(message)
                 .setContentIntent(pi)
                 .setAutoCancel(true)
                 .build();
@@ -254,4 +283,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
         notificationManager.notify(0, notification);
     }
 
+
+    private boolean checkSMSPermission(String permission)
+    {
+        int check = ContextCompat.checkSelfPermission(this, permission);
+        return (check == PackageManager.PERMISSION_GRANTED);
+    }
 }
