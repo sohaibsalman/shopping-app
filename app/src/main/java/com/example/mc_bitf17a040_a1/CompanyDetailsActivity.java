@@ -149,10 +149,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 }
 
                 Order updatedOrder = orders.get(index);
-                orders.remove(index);
                 updatedOrder.setCompanyDetails(company);
 
-                orders.add(updatedOrder);
+                orders.set(index, updatedOrder);
 
                 FileHandler.update(this, orders);
             }

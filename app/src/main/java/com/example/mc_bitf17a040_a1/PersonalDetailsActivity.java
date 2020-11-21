@@ -119,10 +119,9 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
                 }
 
                 Order updatedOrder = orders.get(index);
-                orders.remove(index);
                 updatedOrder.setPersonalDetails(personalDetails);
 
-                orders.add(updatedOrder);
+                orders.set(index, updatedOrder);
 
                 companyScreen.putExtra("isForEdit", true);
                 companyScreen.putExtra("Orders", orders);
