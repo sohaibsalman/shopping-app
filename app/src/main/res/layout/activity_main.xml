@@ -31,6 +31,12 @@
                 android:layout_marginTop="50dp"
                 android:text="Next" />
 
+            <Button
+                android:id="@+id/btnOrders"
+                style="@style/button_next"
+                android:layout_marginTop="50dp"
+                android:text="Orders" />
+
         </LinearLayout>
 
     </ScrollView>

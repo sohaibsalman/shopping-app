@@ -33,6 +33,7 @@ public class FileHandler {
 
                 file.write(line.getBytes());
             }
+            file.close();
         }
         catch (Exception e)
         {
@@ -89,5 +90,27 @@ public class FileHandler {
             e.printStackTrace();
         }
         return orderList;
+    }
+
+
+    public static void update(AppCompatActivity context, ArrayList<Order> ordersList)
+    {
+        try
+        {
+            FileOutputStream file = context.openFileOutput("orders.txt", context.MODE_WORLD_READABLE);
+
+            for (Order order: ordersList)
+            {
+                String line = order.toString();
+
+                file.write(line.getBytes());
+            }
+
+            file.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

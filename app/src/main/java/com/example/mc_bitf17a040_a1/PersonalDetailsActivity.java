@@ -13,6 +13,7 @@ import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalDetailsActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener{
@@ -61,16 +62,21 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
     protected void onResume() {
         super.onResume();
 
-        Order details = (Order) getIntent().getSerializableExtra("Orders");
-        if(details != null)
-        {
-            txtFirstName.setText(details.getPersonalDetails().getFirstName());
-            txtLastName.setText(details.getPersonalDetails().getLastName());
-            txtEmail.setText(details.getPersonalDetails().getEmail());
-            txtContact.setText(details.getPersonalDetails().getContact());
 
-            isEdited = true;
+        isEdited = (boolean) getIntent().getBooleanExtra("EditOrder", false);
+
+        if(isEdited)
+        {
+            Order details = (Order) getIntent().getSerializableExtra("SelectedOrder");
+            if(details != null)
+            {
+                txtFirstName.setText(details.getPersonalDetails().getFirstName());
+                txtLastName.setText(details.getPersonalDetails().getLastName());
+                txtEmail.setText(details.getPersonalDetails().getEmail());
+                txtContact.setText(details.getPersonalDetails().getContact());
+            }
         }
+
     }
 
     @Override
@@ -95,13 +101,37 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
 
             Intent companyScreen = new Intent(this, CompanyDetailsActivity.class);
 
-            companyScreen.putExtra("PersonalDetails", personalDetails);
-            companyScreen.putExtra("itemsList", (Serializable) items);
-
             if(isEdited)
             {
-                Order details = (Order) getIntent().getSerializableExtra("Orders");
-                companyScreen.putExtra("CompanyDetails", details.getCompanyDetails());
+                ArrayList<Order> orders = (ArrayList<Order>) getIntent().getSerializableExtra("Orders");
+                Order selected = (Order) getIntent().getSerializableExtra("SelectedOrder");
+
+                int index = -1;
+
+                for(int i = 0; i < orders.size(); i++)
+                {
+                    Order temp = orders.get(i);
+                    if(temp.getId().equals(selected.getId()))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                Order updatedOrder = orders.get(index);
+                updatedOrder.setPersonalDetails(personalDetails);
+
+                orders.set(index, updatedOrder);
+
+                companyScreen.putExtra("isForEdit", true);
+                companyScreen.putExtra("Orders", orders);
+                companyScreen.putExtra("SelectedOrder", selected);
+            }
+
+            else
+            {
+                companyScreen.putExtra("PersonalDetails", personalDetails);
+                companyScreen.putExtra("itemsList", (Serializable) items);
             }
 
             startActivity(companyScreen);

@@ -76,18 +76,9 @@ public class ListScreenActivity extends AppCompatActivity implements
         btnFloatOrder.setOnClickListener(this);
     }
 
-    private void initListView() {
-        ArrayList<Order> tempList = FileHandler.get(this);
-
-        if(tempList.size() > 0)
-        {
-            for (Order order: tempList) {
-                orders.add(order);
-                allOrders.add(order);
-                adapterOrders.notifyDataSetChanged();
-            }
-        }
-    }
+    /********************************
+     Listeners
+     ********************************/
 
     @Override
     public void onClick(View v)
@@ -129,7 +120,11 @@ public class ListScreenActivity extends AppCompatActivity implements
                 if(item.getItemId() == R.id.edit)
                 {
                     Intent newIntent = new Intent(ref, PersonalDetailsActivity.class);
-                    newIntent.putExtra("Orders", selectedOrders.get(0));
+
+                    newIntent.putExtra("EditOrder", true);
+                    newIntent.putExtra("Orders", orders);
+                    newIntent.putExtra("SelectedOrder", selectedOrders.get(0));
+
 
                     startActivity(newIntent);
                 }
@@ -209,50 +204,35 @@ public class ListScreenActivity extends AppCompatActivity implements
         return false;
     }
 
-    private void deleteOrder(AppCompatActivity context)
-    {
-        try {
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(context.openFileInput("orders.txt")));
-//            FileOutputStream writer = context.openFileOutput("temp.txt", context.MODE_WORLD_READABLE);
+    /********************************
+     Utility functions
+     ********************************/
 
-            for(int i = 0; i < selectedOrders.size(); i++)
-            {
-                Order removedOrder = selectedOrders.get(i);
-                // Delete from array list
-                orders.remove(removedOrder);
+    private void initListView() {
+        ArrayList<Order> tempList = FileHandler.get(this);
 
-//                // Delete from file
-//                String line = reader.readLine();
-//
-//                while(line != null)
-//                {
-//                    StringTokenizer token = new StringTokenizer(line, "|");
-//                    String idInFile = token.nextToken();
-//
-//                    if(!removedOrder.getId().equals(idInFile))
-//                    {
-//                        writer.write(line.getBytes());
-//                    }
-//                    line = reader.readLine();
-//                }
+        if(tempList.size() > 0)
+        {
+            for (Order order: tempList) {
+                orders.add(order);
+                allOrders.add(order);
+                adapterOrders.notifyDataSetChanged();
             }
-//            reader.close();
-//            writer.close();
-//
-//            // Delete old file
-//            File file = new File(getFilesDir(), "orders.txt");
-//            file.delete();
-//
-//            // Update the name of new file
-//            file = new File(getFilesDir(), "temp.txt");
-//            file.renameTo(new File("orders.txt"));
-
-            selectedOrders.clear();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
+    private void deleteOrder(AppCompatActivity context) {
 
-}
+        // Delete from array list
+        for (int i = 0; i < selectedOrders.size(); i++) {
+            Order removedOrder = selectedOrders.get(i);
+            orders.remove(removedOrder);
+        }
+
+        // Delete data from file
+        FileHandler.update(context, this.orders);
+
+        selectedOrders.clear();
+    }
+
+}   // end of class
