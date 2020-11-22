@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.mc_bitf17a040_a1.classes.Order;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ListAdapter extends ArrayAdapter implements Filterable {
@@ -49,10 +50,11 @@ public class ListAdapter extends ArrayAdapter implements Filterable {
         ((TextView)listItem.findViewById(R.id.lblCity)).setText(order.getCompanyDetails().getCity());
         ((TextView)listItem.findViewById(R.id.lblBoxes)).setText(order.getCompanyDetails().getNoOfBoxes());
 
-        ((TextView)listItem.findViewById(R.id.lblOrderTime)).setText(order.getDateOfCreation().toString());
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+        ((TextView)listItem.findViewById(R.id.lblOrderTime)).setText(format.format(order.getDateOfCreation()));
 
         if(selectedOrders.contains(order)) {
-            listItem.setBackgroundColor(context.getResources().getColor(R.color.colorGray));
+            listItem.setBackgroundColor(context.getResources().getColor(R.color.colorSelect));
         }
         else {
             listItem.setBackgroundColor(context.getResources().getColor(android.R.color.white));
