@@ -142,6 +142,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
             {
                 // Add to order.txt
                 FileHandler.add(this, orders, personal, company);
+                sendNotifications();
             }
             else
             {
@@ -168,7 +169,6 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 FileHandler.update(this, orders);
             }
 
-            sendNotifications();
 
             Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
             startActivity(newIntent);
