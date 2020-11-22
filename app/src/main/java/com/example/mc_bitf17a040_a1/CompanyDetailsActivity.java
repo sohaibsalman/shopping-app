@@ -1,9 +1,20 @@
 package com.example.mc_bitf17a040_a1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +37,7 @@ import java.util.List;
 public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         View.OnClickListener, View.OnFocusChangeListener {
 
+    private static final int SEND_SMS_PERMISSION_REQUEST_CODE = 1 ;
     private Spinner spinBoxes;
     private EditText txtCompanyName;
     private EditText txtZip;
@@ -156,6 +168,8 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 FileHandler.update(this, orders);
             }
 
+            sendNotifications();
+
             Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
             startActivity(newIntent);
         }
@@ -223,5 +237,84 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                     txtZip.setBackgroundResource(R.drawable.textbox_border_green);
             }
         }
+    }
+
+    private boolean sendNotifications()
+    {
+        // Show notification in notification bar
+        showNotification();
+
+        // Send SMS Notification
+        sendSMS();
+
+        // Send email Notification
+        sendEmail();
+
+        return true;
+    }
+
+    private void sendEmail()
+    {
+        String emailAddress = personal.getEmail().trim();
+        String message = "Dear " + personal.getFirstName() + ", your order has been placed successfully. Thank you for choosing us!";
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setData(Uri.parse("mailto:"));
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_EMAIL, emailAddress);
+        i.putExtra(Intent.EXTRA_SUBJECT, "Shopping App - Order Placed");
+        i.putExtra(Intent.EXTRA_TEXT, message);
+
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+            finish();
+        }
+        catch (Exception ex) {
+        }
+
+    }
+
+    private void sendSMS() {
+        if(checkPermission(Manifest.permission.SEND_SMS))
+        {
+            String message = "Dear " + personal.getFirstName() + ", your order has been placed successfully. Thank you for choosing us!";
+            // String destination = personal.getContact().trim();
+            String destination = "03164141068"; 
+
+            // Permission Granted, send sms
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(destination, null, message, null, null);
+            Toast.makeText(this, "SMS sent successfully", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            // Request for permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void showNotification() {
+        String message = "Dear Customer, your order has been placed!";
+        Intent i = new Intent(this, ListScreenActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, i, 0);
+        Resources r = getResources();
+        Notification notification = new NotificationCompat.Builder(this)
+                .setTicker(r.getString(R.string.app_name))
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle("Shopping App")
+                .setContentText(message)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
+    }
+
+
+    private boolean checkPermission(String permission)
+    {
+        int check = ContextCompat.checkSelfPermission(this, permission);
+        return (check == PackageManager.PERMISSION_GRANTED);
     }
 }

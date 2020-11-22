@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
@@ -139,6 +140,11 @@ public class ListScreenActivity extends AppCompatActivity implements
                             deleteOrder(ref);
 
                             adapterOrders.notifyDataSetChanged();
+
+                            // Display Toast Notification
+                            int count = lstOrders.getCheckedItemCount();
+                            Toast.makeText(ref, count + " order(s) deleted", Toast.LENGTH_SHORT).show();
+
                             mode.finish();
                         }
                     });
