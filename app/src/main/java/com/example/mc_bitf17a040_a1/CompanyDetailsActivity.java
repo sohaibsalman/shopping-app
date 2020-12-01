@@ -26,12 +26,10 @@ import android.widget.Toast;
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+import com.example.mc_bitf17a040_a1.helper_classes.DBHandler;
 import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
@@ -140,9 +138,11 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
             if(!isForEdit)
             {
-                // Add to order.txt
-                FileHandler.add(this, orders, personal, company);
-                sendNotifications();
+                // ADD NEW ORDER
+                DBHandler db = new DBHandler(this);
+                db.add(orders, personal, company);
+
+                //sendNotifications();
             }
             else
             {
@@ -154,7 +154,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 for(int i = 0; i < orders.size(); i++)
                 {
                     Order temp = orders.get(i);
-                    if(temp.getId().equals(selected.getId()))
+                    if(temp.getGuid().equals(selected.getGuid()))
                     {
                         index = i;
                         break;
@@ -166,9 +166,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
                 orders.set(index, updatedOrder);
 
-                FileHandler.update(this, orders);
+                DBHandler db = new DBHandler(this);
+                db.update(updatedOrder);
             }
-
 
             Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
             startActivity(newIntent);

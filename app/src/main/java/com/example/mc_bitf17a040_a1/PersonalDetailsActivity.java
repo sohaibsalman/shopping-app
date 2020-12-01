@@ -111,7 +111,7 @@ public class PersonalDetailsActivity extends AppCompatActivity implements View.O
                 for(int i = 0; i < orders.size(); i++)
                 {
                     Order temp = orders.get(i);
-                    if(temp.getId().equals(selected.getId()))
+                    if(temp.getGuid().equals(selected.getGuid()))
                     {
                         index = i;
                         break;
