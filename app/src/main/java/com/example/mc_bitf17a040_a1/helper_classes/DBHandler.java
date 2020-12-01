@@ -94,17 +94,37 @@ public class DBHandler extends SQLiteOpenHelper {
         result.moveToFirst();
 
         for (int i = 0; i < result.getCount(); i++) {
-            Order order = new Order();
 
-            order.setId(result.getString(1));
-            order.setItemName(result.getString(2));
+            // Get Order Info
+            String guid = result.getString(1);
+            String itemName = result.getString(2);
 
+            // Get Personal Info
+            PersonalDetails personalDetails = new PersonalDetails(
+                    result.getString(3),
+                    result.getString(4),
+                    result.getString(5),
+                    result.getString(6)
+            );
 
+            // Get Company Info
+            CompanyDetails companyDetails = new CompanyDetails(
+                    result.getString(7),
+                    result.getString(8),
+                    result.getString(9),
+                    result.getString(10),
+                    result.getString(11)
+            );
+
+            // Get order Date
+            String date = result.getString(12);
+
+            Order temp = new Order(guid, itemName, personalDetails, companyDetails, new Date(date));
+            list.add(temp);
+            result.moveToNext();
         }
 
         return list;
-
-
     }
 
 }
