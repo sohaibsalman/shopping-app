@@ -142,7 +142,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 DBHandler db = new DBHandler(this);
                 db.add(orders, personal, company);
 
-                //sendNotifications();
+                sendNotifications();
             }
             else
             {
