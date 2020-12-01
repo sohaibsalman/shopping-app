@@ -134,4 +134,26 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.delete(TABLE_NAME, "orderID = ?", new String[] {id});
     }
+
+    public void update(Order updatedOrder)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String id = Integer.toString(updatedOrder.getId());
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ITEM_NAME, updatedOrder.getItemName());
+        contentValues.put(FIRST_NAME, updatedOrder.getPersonalDetails().getFirstName());
+        contentValues.put(LAST_NAME, updatedOrder.getPersonalDetails().getLastName());
+        contentValues.put(EMAIL, updatedOrder.getPersonalDetails().getEmail());
+        contentValues.put(CONTACT, updatedOrder.getPersonalDetails().getContact());
+        contentValues.put(COMPANY_NAME, updatedOrder.getCompanyDetails().getCompanyName());
+        contentValues.put(ZIP, updatedOrder.getCompanyDetails().getZip());
+        contentValues.put(STATE, updatedOrder.getCompanyDetails().getState());
+        contentValues.put(CITY, updatedOrder.getCompanyDetails().getCity());
+        contentValues.put(NO_OF_BOXES, updatedOrder.getCompanyDetails().getNoOfBoxes());
+        contentValues.put(ORDER_DATE, updatedOrder.getDateOfCreation().toString());
+
+        db.update(TABLE_NAME, contentValues, "orderID = ?", new String[] {id});
+    }
 }

@@ -166,9 +166,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
                 orders.set(index, updatedOrder);
 
-                FileHandler.update(this, orders);
+                DBHandler db = new DBHandler(this);
+                db.update(updatedOrder);
             }
-
 
             Intent newIntent = new Intent(CompanyDetailsActivity.this, ListScreenActivity.class);
             startActivity(newIntent);
