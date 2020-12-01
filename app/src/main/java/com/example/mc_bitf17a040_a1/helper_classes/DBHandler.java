@@ -1,0 +1,167 @@
+package com.example.mc_bitf17a040_a1.helper_classes;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
+import com.example.mc_bitf17a040_a1.classes.Order;
+import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class DBHandler extends SQLiteOpenHelper {
+
+    public static final String DATABASE_NAME = "shopping-app.db";
+    public static final String TABLE_NAME = "orders";
+    public static final String ORDER_ID = "orderID";
+    public static final String GUID = "guid";
+    public static final String ITEM_NAME = "itemName";
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
+    public static final String EMAIL = "email";
+    public static final String CONTACT = "contact";
+    public static final String COMPANY_NAME = "companyName";
+    public static final String ZIP = "zip";
+    public static final String STATE = "state";
+    public static final String CITY = "city";
+    public static final String NO_OF_BOXES = "noOfBoxes";
+    public static final String ORDER_DATE = "orderDate";
+
+    public DBHandler(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String query = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+                " (" +
+                "orderID INTEGER PRIMARY KEY AUTOINCREMENT, guid TEXT, itemName TEXT, " +
+                "firstName TEXT, lastName TEXT, email TEXT, contact TEXT, " +
+                "companyName TEXT, zip TEXT, state TEXT, city TEXT, " +
+                "noOfBoxes TEXT, orderDate TEXT" +
+                ")";
+        db.execSQL(query);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+
+
+    public void add(List<String> orders, PersonalDetails personal, CompanyDetails company) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (String item : orders) {
+
+            Order order = new Order(item, personal, company, new Date());
+
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put(GUID, order.getId());
+            contentValues.put(ITEM_NAME, order.getItemName());
+            contentValues.put(FIRST_NAME, order.getPersonalDetails().getFirstName());
+            contentValues.put(LAST_NAME, order.getPersonalDetails().getLastName());
+            contentValues.put(EMAIL, order.getPersonalDetails().getEmail());
+            contentValues.put(CONTACT, order.getPersonalDetails().getContact());
+            contentValues.put(COMPANY_NAME, order.getCompanyDetails().getCompanyName());
+            contentValues.put(ZIP, order.getCompanyDetails().getZip());
+            contentValues.put(STATE, order.getCompanyDetails().getState());
+            contentValues.put(CITY, order.getCompanyDetails().getCity());
+            contentValues.put(NO_OF_BOXES, order.getCompanyDetails().getNoOfBoxes());
+            contentValues.put(ORDER_DATE, order.getDateOfCreation().toString());
+
+            db.insert(TABLE_NAME, null, contentValues);
+        }
+    }
+
+    public ArrayList<Order> get() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<Order> list = new ArrayList<>();
+
+        String query = "SELECT * FROM orders";
+
+        Cursor result = db.rawQuery(query, null);
+        result.moveToFirst();
+
+        for (int i = 0; i < result.getCount(); i++) {
+            Order order = new Order();
+
+            order.setId(result.getString(1));
+            order.setItemName(result.getString(2));
+
+
+        }
+
+        return list;
+
+
+    }
+
+}
+
+
+//    private SQLiteDatabase db;
+//
+//    public DBHandler(SQLiteDatabase db)
+//    {
+//        this.db  = db;
+//    }
+//
+//    public void createTable()
+//    {
+//        String query = "CREATE TABLE IF NOT EXISTS orders " +
+//                "(" +
+//                "orderID INTEGER PRIMARY KEY AUTOINCREMENT, guid TEXT, itemName TEXT, " +
+//                "firstName TEXT, lastName TEXT, email TEXT, contact TEXT, " +
+//                "companyName TEXT, zip TEXT, state TEXT, city TEXT, " +
+//                "noOfBoxes INTEGER, orderDate TEXT" +
+//                ")";
+//        db.execSQL(query);
+//    }
+//
+//    public void add(List<String> orders, PersonalDetails personal, CompanyDetails company)
+//    {
+//        for (String item: orders) {
+//
+//            Order order = new Order(item, personal, company, new Date());
+//
+//            String query = "INSERT INTO orders (guid, itemName, firstName, lastName, email, contact, " +
+//                    "companyName, zip, state, city, noOfBoxes, orderDate) VALUES " +
+//                    "(" + order.getId() + ", " + order.getItemName() + ", " + order.getPersonalDetails().getFirstName() +
+//                    ", " + order.getPersonalDetails().getLastName() + ", " + order.getPersonalDetails().getEmail()  +
+//                    ", " + order.getPersonalDetails().getContact()  + ", " + order.getCompanyDetails().getCompanyName() +
+//                    ", " + order.getCompanyDetails().getZip() + ", " + order.getCompanyDetails().getState() +
+//                    ", " + order.getCompanyDetails().getCity()  + ", " + order.getCompanyDetails().getNoOfBoxes() +
+//                    ", " + order.getDateOfCreation().toString();
+//
+//            db.execSQL(query);
+//        }
+//    }
+//
+//    public ArrayList<Order> get() {
+//        ArrayList<Order> list = new ArrayList<>();
+//
+//        String query = "SELECT * FROM orders";
+//
+//        Cursor c = db.rawQuery(query, null);
+//        c.moveToFirst();
+//
+//        for (int i = 0; i < c.getCount(); i++) {
+//            Order order = new Order();
+//            order.setId(c.getString(1));
+//            order.setItemName(c.getString(2));
+//
+//        }
+//
+//        return list;
+//    }

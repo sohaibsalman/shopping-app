@@ -12,6 +12,8 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -26,10 +28,9 @@ import android.widget.Toast;
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+import com.example.mc_bitf17a040_a1.helper_classes.DBHandler;
 import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -140,9 +141,11 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
 
             if(!isForEdit)
             {
-                // Add to order.txt
-                FileHandler.add(this, orders, personal, company);
-                sendNotifications();
+                // ADD NEW ORDER
+                DBHandler db = new DBHandler(this);
+                db.add(orders, personal, company);
+
+                //sendNotifications();
             }
             else
             {

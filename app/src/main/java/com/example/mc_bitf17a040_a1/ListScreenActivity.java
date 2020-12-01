@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.mc_bitf17a040_a1.classes.CompanyDetails;
 import com.example.mc_bitf17a040_a1.classes.Order;
 import com.example.mc_bitf17a040_a1.classes.PersonalDetails;
+import com.example.mc_bitf17a040_a1.helper_classes.DBHandler;
 import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -215,7 +217,9 @@ public class ListScreenActivity extends AppCompatActivity implements
      ********************************/
 
     private void initListView() {
-        ArrayList<Order> tempList = FileHandler.get(this);
+        DBHandler db = new DBHandler(this);
+
+        ArrayList<Order> tempList = db.get();
 
         if(tempList.size() > 0)
         {
