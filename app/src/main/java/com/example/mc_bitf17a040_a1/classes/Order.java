@@ -6,29 +6,39 @@ import java.util.UUID;
 
 public class Order implements Serializable
 {
-    private String id;
+    private int id;
+    private String guid;
     private String itemName;
     private PersonalDetails personalDetails;
     private CompanyDetails companyDetails;
     private Date dateOfCreation;
 
     public Order() {
-        this.id = UUID.randomUUID().toString();
+        this.guid = UUID.randomUUID().toString();
         this.itemName = "";
         this.personalDetails = new PersonalDetails();
         this.companyDetails = new CompanyDetails();
         this.dateOfCreation = new Date();
     }
     public Order(String itemName, PersonalDetails personalDetails, CompanyDetails companyDetails, Date dateOfCreation) {
-        this.id = UUID.randomUUID().toString();
+        this.guid = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.personalDetails = personalDetails;
         this.companyDetails = companyDetails;
         this.dateOfCreation = dateOfCreation;
     }
 
-    public Order(String id, String itemName, PersonalDetails personalDetails, CompanyDetails companyDetails, Date dateOfCreation) {
+    public Order(String guid, String itemName, PersonalDetails personalDetails, CompanyDetails companyDetails, Date dateOfCreation) {
+        this.guid = guid;
+        this.itemName = itemName;
+        this.personalDetails = personalDetails;
+        this.companyDetails = companyDetails;
+        this.dateOfCreation = dateOfCreation;
+    }
+
+    public Order(int id, String guid, String itemName, PersonalDetails personalDetails, CompanyDetails companyDetails, Date dateOfCreation) {
         this.id = id;
+        this.guid = guid;
         this.itemName = itemName;
         this.personalDetails = personalDetails;
         this.companyDetails = companyDetails;
@@ -37,7 +47,7 @@ public class Order implements Serializable
 
     public Order(Order ref)
     {
-        this.id = ref.id;
+        this.guid = ref.guid;
         this.itemName = ref.itemName;
         this.personalDetails = ref.personalDetails;
         this.companyDetails = ref.companyDetails;
@@ -77,16 +87,20 @@ public class Order implements Serializable
         this.dateOfCreation = dateOfCreation;
     }
 
-    public String getId() {
-        return id;
+    public String getGuid() {
+        return guid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
     public String toString() {
-        return id + "|" + itemName + "|" + personalDetails.toString() + "|" + companyDetails.toString() + "|" + dateOfCreation.toString() + "\n";
+        return guid + "|" + itemName + "|" + personalDetails.toString() + "|" + companyDetails.toString() + "|" + dateOfCreation.toString() + "\n";
     }
 }

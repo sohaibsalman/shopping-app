@@ -66,7 +66,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
 
-            contentValues.put(GUID, order.getId());
+            contentValues.put(GUID, order.getGuid());
             contentValues.put(ITEM_NAME, order.getItemName());
             contentValues.put(FIRST_NAME, order.getPersonalDetails().getFirstName());
             contentValues.put(LAST_NAME, order.getPersonalDetails().getLastName());
@@ -96,6 +96,7 @@ public class DBHandler extends SQLiteOpenHelper {
         for (int i = 0; i < result.getCount(); i++) {
 
             // Get Order Info
+            int id = result.getInt(0);
             String guid = result.getString(1);
             String itemName = result.getString(2);
 
@@ -119,7 +120,7 @@ public class DBHandler extends SQLiteOpenHelper {
             // Get order Date
             String date = result.getString(12);
 
-            Order temp = new Order(guid, itemName, personalDetails, companyDetails, new Date(date));
+            Order temp = new Order(id, guid, itemName, personalDetails, companyDetails, new Date(date));
             list.add(temp);
             result.moveToNext();
         }
@@ -127,61 +128,10 @@ public class DBHandler extends SQLiteOpenHelper {
         return list;
     }
 
+    public void delete(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_NAME, "orderID = ?", new String[] {id});
+    }
 }
-
-
-//    private SQLiteDatabase db;
-//
-//    public DBHandler(SQLiteDatabase db)
-//    {
-//        this.db  = db;
-//    }
-//
-//    public void createTable()
-//    {
-//        String query = "CREATE TABLE IF NOT EXISTS orders " +
-//                "(" +
-//                "orderID INTEGER PRIMARY KEY AUTOINCREMENT, guid TEXT, itemName TEXT, " +
-//                "firstName TEXT, lastName TEXT, email TEXT, contact TEXT, " +
-//                "companyName TEXT, zip TEXT, state TEXT, city TEXT, " +
-//                "noOfBoxes INTEGER, orderDate TEXT" +
-//                ")";
-//        db.execSQL(query);
-//    }
-//
-//    public void add(List<String> orders, PersonalDetails personal, CompanyDetails company)
-//    {
-//        for (String item: orders) {
-//
-//            Order order = new Order(item, personal, company, new Date());
-//
-//            String query = "INSERT INTO orders (guid, itemName, firstName, lastName, email, contact, " +
-//                    "companyName, zip, state, city, noOfBoxes, orderDate) VALUES " +
-//                    "(" + order.getId() + ", " + order.getItemName() + ", " + order.getPersonalDetails().getFirstName() +
-//                    ", " + order.getPersonalDetails().getLastName() + ", " + order.getPersonalDetails().getEmail()  +
-//                    ", " + order.getPersonalDetails().getContact()  + ", " + order.getCompanyDetails().getCompanyName() +
-//                    ", " + order.getCompanyDetails().getZip() + ", " + order.getCompanyDetails().getState() +
-//                    ", " + order.getCompanyDetails().getCity()  + ", " + order.getCompanyDetails().getNoOfBoxes() +
-//                    ", " + order.getDateOfCreation().toString();
-//
-//            db.execSQL(query);
-//        }
-//    }
-//
-//    public ArrayList<Order> get() {
-//        ArrayList<Order> list = new ArrayList<>();
-//
-//        String query = "SELECT * FROM orders";
-//
-//        Cursor c = db.rawQuery(query, null);
-//        c.moveToFirst();
-//
-//        for (int i = 0; i < c.getCount(); i++) {
-//            Order order = new Order();
-//            order.setId(c.getString(1));
-//            order.setItemName(c.getString(2));
-//
-//        }
-//
-//        return list;
-//    }

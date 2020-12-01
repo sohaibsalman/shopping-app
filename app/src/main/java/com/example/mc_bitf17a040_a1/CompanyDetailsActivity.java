@@ -12,8 +12,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -32,7 +30,6 @@ import com.example.mc_bitf17a040_a1.helper_classes.DBHandler;
 import com.example.mc_bitf17a040_a1.helper_classes.FileHandler;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
@@ -157,7 +154,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Adapter
                 for(int i = 0; i < orders.size(); i++)
                 {
                     Order temp = orders.get(i);
-                    if(temp.getId().equals(selected.getId()))
+                    if(temp.getGuid().equals(selected.getGuid()))
                     {
                         index = i;
                         break;

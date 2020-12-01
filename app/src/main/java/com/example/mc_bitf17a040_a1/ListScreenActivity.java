@@ -232,15 +232,15 @@ public class ListScreenActivity extends AppCompatActivity implements
     }
 
     private void deleteOrder(AppCompatActivity context) {
-
+        DBHandler db = new DBHandler(this);
         // Delete from array list
         for (int i = 0; i < selectedOrders.size(); i++) {
             Order removedOrder = selectedOrders.get(i);
             orders.remove(removedOrder);
-        }
 
-        // Delete data from file
-        FileHandler.update(context, this.orders);
+            // Delete from DB
+            db.delete(Integer.toString(removedOrder.getId()));
+        }
 
         selectedOrders.clear();
     }
